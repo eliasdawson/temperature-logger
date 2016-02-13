@@ -1,0 +1,14 @@
+# Mac OS files
+.DS_Store
+
+# NodeJS modules
+node_modules
+
+# Sublime Text editor files
+*.sublime*
+
+# Code coverage reports
+coverage
+
+# Build directory
+dist

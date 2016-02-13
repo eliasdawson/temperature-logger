@@ -1,0 +1,37 @@
+{
+  "name": "temperature-logger",
+  "version": "0.0.1",
+  "description": "Toy app experimenting with Exosite Websocket API.",
+  "private": true,
+  "scripts": {
+    "test": "./node_modules/karma/bin/karma start",
+    "build": "./node_modules/browserify/bin/browserify source/index.js -o dist/bundle.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/eliasdawson/temperature-logger.git"
+  },
+  "author": {
+    "name": "Elias Dawson",
+    "email": "elias.echols@gmail.com"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/eliasdawson/temperature-logger/issues"
+  },
+  "homepage": "https://github.com/eliasdawson/temperature-logger#readme",
+  "devDependencies": {
+    "browserify": "^13.0.0",
+    "jasmine-core": "^2.4.1",
+    "karma": "^0.13.19",
+    "karma-browserify": "^5.0.1",
+    "karma-coverage": "^0.5.3",
+    "karma-jasmine": "^0.3.7",
+    "karma-phantomjs-launcher": "^1.0.0",
+    "phantomjs-prebuilt": "^2.1.4",
+    "watchify": "^3.7.0"
+  },
+  "dependencies": {
+    "node-uuid": "^1.4.7"
+  }
+}
