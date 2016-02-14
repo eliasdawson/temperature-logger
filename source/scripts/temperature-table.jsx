@@ -1,5 +1,5 @@
-var React = require('react');
-var TemperatureTableRow = require('./temperature-table-row.jsx');
+var React = require( 'react' );
+var TemperatureTableRow = require( './temperature-table-row.jsx' );
 
 var TemperatureTable = React.createClass({
   render: function() {

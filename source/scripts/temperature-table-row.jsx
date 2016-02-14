@@ -1,7 +1,12 @@
-var React = require('react');
-var moment = require('moment');
+var React = require( 'react' );
+var moment = require( 'moment' );
 
-function formatTimestamp(unixTime) {
+/**
+ * Format unixTime value as string for display
+ * @param  {number} unixTime Time to format (in unixTime format)
+ * @return {string}          Formatted time for display
+ */
+function formatTimestamp( unixTime ) {
   var timestamp = new moment( unixTime * 1000 );
   return timestamp.format( 'HH:mm:ss' );
 }

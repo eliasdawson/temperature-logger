@@ -18,7 +18,8 @@
     "dev-css": "./node_modules/node-sass/bin/node-sass -o dev/css source/styles",
     "dev-watch-css": "./node_modules/node-sass/bin/node-sass -w -o dev/css source/styles",
     "dev-watch": "./node_modules/parallelshell/index.js 'npm run dev-watch-js' 'npm run dev-watch-css'",
-    "dev": "npm run dev-init && npm run dev-html && npm run dev-js && npm run dev-css && npm run dev-watch"
+    "dev": "npm run dev-init && npm run dev-html && npm run dev-js && npm run dev-css && npm run dev-watch",
+    "start": "npm run dev"
   },
   "repository": {
     "type": "git",

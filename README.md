@@ -12,10 +12,10 @@ Toy app experimenting with Exosite Websocket API
 
 Run tests using karma test runner. Generates test coverage report in /coverage directory.
 
-### Build: `npm build`
+### Build: `npm run build`
 
 Build files for distribution in /dist directory.
 
-### Dev mode: `npm run dev`
+### Dev mode: `npm start`
 
 Process and watch source files for preview in /dev directory

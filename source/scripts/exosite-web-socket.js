@@ -38,6 +38,7 @@ function buildRequestBody( procedure, args, id ) {
 
 /**
  * Construct Exosite Web Socket object and connect to web socket
+ * @constructor
  * @param {string} url URL of Exosite Web Socket API
  * @param {string} clientKey Client key for API authentication
  * @param {function} [openCallBack] Method to call upon successful connection

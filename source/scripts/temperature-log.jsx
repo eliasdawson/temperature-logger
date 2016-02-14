@@ -1,65 +1,85 @@
-var React = require('react');
-var ExositeWebSocket = require('./exosite-web-socket');
-var TemperatureTable = require('./temperature-table.jsx');
-var TemperatureInput = require('./temperature-input.jsx');
+var React = require( 'react' );
+var ExositeWebSocket = require( './exosite-web-socket' );
+var LoggedTemperature = require( './logged-temperature' );
+var LoggedTemperatureList = require( './logged-temperature-list' );
+var TemperatureTable = require( './temperature-table.jsx' );
+var TemperatureInput = require( './temperature-input.jsx' );
 
-function getLastFiveTemps( socket ) {
+/**
+ * Number of temperatures expected to be logged
+ * @type {number}
+ * @const
+ */
+var LOGGED_TEMPERATURES = 5;
+
+/**
+ * Client key used for socket authentication
+ * @type {string}
+ * @const
+ */
+var CLIENT_KEY = 'dbc6361c3e22bd647118747e398f8f1b6e6498f3';
+
+/**
+ * Read last n (configured in constant) temperatures from specified socket.
+ * @param  {ExositeWebSocket} socket ExositeWebSocket object to connect to
+ */
+function getLatestTemps( socket ) {
   socket.read([
     { 'alias': 'temperature' },
-    { 'limit': 5 }
+    { 'limit': LOGGED_TEMPERATURES }
   ]);
-}
-
-function buildTemperatureObject( result ) {
-  return {
-    timestamp: result[0],
-    temperature: result[1]
-  };
-}
-
-function sortTemperaturesByTimestampAscending(a, b) {
-  return a[0] - b[0];
 }
 
 var TemperatureLog = React.createClass({
 
+  /**
+   * Handler for web socket connection. Get initial data and subscribe to future updates
+   */
   connectionCallback: function() {
     this.state.socket.subscribe([
       { 'alias': 'temperature' },
       { 'since': Date.now() }
     ]);
-    getLastFiveTemps( this.state.socket );
+    getLatestTemps( this.state.socket );
   },
 
+  /**
+   * Handler for web socket messages. Update app state with returned temperatures.
+   * @param  {string} msg JSON response from web socket
+   */
   messageHandler: function( msg ) {
-    var i;
     var receivedTemperatures;
     var updatedTemperatures = [];
     var updatedState = this.state;
-    var data = JSON.parse(msg.data);
+    var data = JSON.parse( msg.data );
 
+    // TODO: assumptions are made about data based on format.
+    // A more definitive and flexible method would be preferred.
     if ( data.length > 0 ) {
       if ( data[0].result !== undefined ) {
-        if ( data[0].result.length === 5 ) {
-          receivedTemperatures = data[0].result;
-          receivedTemperatures.sort( sortTemperaturesByTimestampAscending );
-          for( i = 0; i < receivedTemperatures.length; i += 1 ) {
-            updatedTemperatures.push( buildTemperatureObject(receivedTemperatures[i]));
-          }
-          updatedState.temperatures = updatedTemperatures;
+        // TODO: generalize to handle other numbers of results besides 1 or the expected number
+        if ( data[0].result.length === LOGGED_TEMPERATURES ) {
+          // Received expected number of temperatures (initial call)
+          receivedTemperatures = new LoggedTemperatureList( data[0].result );
+          updatedState.temperatures = receivedTemperatures.temperatures;
         } else if ( data[0].result.length === 2 ) {
-
-          if ( this.state.temperatures.length >= 5 ) {
-            updatedState.temperatures = updatedState.temperatures.slice(1);
+          // Received single temperature (subsequent updates)
+          // Remove oldest temperature to limit to desired number
+          if ( this.state.temperatures.length >= LOGGED_TEMPERATURES ) {
+            updatedState.temperatures = updatedState.temperatures.slice( 1 );
           }
-          updatedState.temperatures.push( buildTemperatureObject( data[0].result ) );
+          updatedState.temperatures.push( new LoggedTemperature( data[0].result ) );
         }
       }
     }
 
-    this.setState(updatedState);
+    this.setState( updatedState );
   },
 
+  /**
+   * Write temperature to web socket
+   * @param  {number} temperature Temperature to write to web socket
+   */
   writeTemperature: function( temperature ) {
     this.state.socket.write([
       { 'alias': 'temperature' },
@@ -69,7 +89,7 @@ var TemperatureLog = React.createClass({
 
   getInitialState: function() {
     return {
-      socket: new ExositeWebSocket( 'wss://m2.exosite.com/ws', 'dbc6361c3e22bd647118747e398f8f1b6e6498f3', this.connectionCallback, this.messageHandler ),
+      socket: new ExositeWebSocket( 'wss://m2.exosite.com/ws', CLIENT_KEY, this.connectionCallback, this.messageHandler ),
       temperatures: [],
     };
   },
