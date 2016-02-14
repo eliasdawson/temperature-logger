@@ -1,9 +1,11 @@
 var React = require( 'react' );
+var LineChart = require( 'react-d3' ).LineChart;
 var ExositeWebSocket = require( './exosite-web-socket' );
 var LoggedTemperature = require( './logged-temperature' );
 var LoggedTemperatureList = require( './logged-temperature-list' );
 var TemperatureTable = require( './temperature-table.jsx' );
 var TemperatureInput = require( './temperature-input.jsx' );
+
 
 /**
  * Number of temperatures expected to be logged
@@ -48,6 +50,7 @@ var TemperatureLog = React.createClass({
    * @param  {string} msg JSON response from web socket
    */
   messageHandler: function( msg ) {
+    var i;
     var receivedTemperatures;
     var updatedTemperatures = [];
     var updatedState = this.state;
@@ -73,6 +76,22 @@ var TemperatureLog = React.createClass({
       }
     }
 
+    if ( updatedState.temperatures.length > 0 ) {
+      updatedState.chartData = [
+        {
+          values: []
+        }
+      ];
+
+      updatedState.chartData[ 0 ].values = [];
+      for( i = 0; i < updatedState.temperatures.length; i += 1 ) {
+        updatedState.chartData[ 0 ].values.push({
+          x: updatedState.temperatures[ i ].timestamp,
+          y: updatedState.temperatures[ i ].temperature
+        });
+      }
+    }
+
     this.setState( updatedState );
   },
 
@@ -91,6 +110,7 @@ var TemperatureLog = React.createClass({
     return {
       socket: new ExositeWebSocket( 'wss://m2.exosite.com/ws', CLIENT_KEY, this.connectionCallback, this.messageHandler ),
       temperatures: [],
+      chartData: []
     };
   },
 
@@ -99,6 +119,7 @@ var TemperatureLog = React.createClass({
       <div className='etl-temp-log'>
         <TemperatureInput writeFn={this.writeTemperature} />
         <TemperatureTable data={this.state.temperatures}/>
+        <LineChart data={this.state.chartData} />
       </div>
     );
   }
