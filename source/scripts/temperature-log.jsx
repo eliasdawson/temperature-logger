@@ -30,6 +30,19 @@ function getLatestTemps( socket ) {
   ]);
 }
 
+/**
+ * Convert passed temperatures to format for use with charts
+ * @return {Array<LoggedTemperatures>} Chart-formatted data
+ */
+function convertToChartData( temperatures ) {
+  var i;
+  var data = [ [ 'Timestamp', 'Temperature' ] ];
+  for( i = 0; i < temperatures.length; i += 1 ) {
+    data.push( [ temperatures[ i ].timestampString, temperatures[ i ].temperature ] );
+  }
+  return data;
+}
+
 var TemperatureLog = React.createClass({
 
   /**
@@ -52,6 +65,7 @@ var TemperatureLog = React.createClass({
     var updatedTemperatures = [];
     var updatedState = this.state;
     var data = JSON.parse( msg.data );
+    var updatedTemperaturesEvent = new Event( 'temperatureUpdated' );
 
     // TODO: assumptions are made about data based on format.
     // A more definitive and flexible method would be preferred.
@@ -74,6 +88,8 @@ var TemperatureLog = React.createClass({
     }
 
     this.setState( updatedState );
+    window.temperatureChartData = convertToChartData( updatedState.temperatures );
+    document.dispatchEvent( updatedTemperaturesEvent );
   },
 
   /**

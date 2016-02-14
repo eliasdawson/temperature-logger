@@ -71,6 +71,7 @@
         "spyOn":        false,    // Jasmine
         "waitsFor":     false,    // Jasmine
         "runs":         false,    // Jasmine
-        "waits":        false     // Jasmine
+        "waits":        false,    // Jasmine
+        "google":       false     // Google Charts
     }
 }

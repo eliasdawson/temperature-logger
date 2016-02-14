@@ -6,7 +6,7 @@ var TemperatureTable = React.createClass({
 
     var rows = this.props.data.map( function ( temperature, index ) {
       return (
-        <TemperatureTableRow key={index} temperature={temperature.temperature} timestamp={temperature.timestamp}/>
+        <TemperatureTableRow key={index} temperature={temperature.temperature} timestamp={temperature.timestampString}/>
       );
     });
 

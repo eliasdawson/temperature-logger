@@ -7,7 +7,17 @@
 </head>
 <body>
   <h1>Temperature Logger</h1>
-  <div id="app"></div>
+
+  <div class="row">
+    <div id="app" class="left-col"></div>
+    <div id="temperatureChart" class="right-col"></div>
+  </div>
+
   <script src="bundle.js"></script>
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  <script type="text/javascript">
+    google.charts.load( 'current', { packages: [ 'corechart' ] } );
+    google.charts.setOnLoadCallback( drawTemperatureChart );
+  </script>
 </body>
 </html>

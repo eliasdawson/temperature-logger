@@ -1,3 +1,15 @@
+var moment = require( 'moment' );
+
+/**
+ * Format unixTime value as string for display
+ * @param  {number} unixTime Time to format (in unixTime format)
+ * @return {string}          Formatted time for display
+ */
+function formatTimestamp( unixTime ) {
+  var timestamp = new moment( unixTime * 1000 );
+  return timestamp.format( 'HH:mm:ss' );
+}
+
 /**
  * Translate temperature socket result into more useful object
  * @constructor
@@ -6,6 +18,7 @@
 var LoggedTemperature = function( result ) {
   this.timestamp = result[0];
   this.temperature = result[1];
+  this.timestampString = formatTimestamp( this.timestamp );
 };
 
 /**
