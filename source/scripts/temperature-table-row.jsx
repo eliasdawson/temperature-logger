@@ -1,5 +1,7 @@
 var React = require( 'react' );
 var moment = require( 'moment' );
+var TableRow = require ( 'material-ui/lib/table/table-row' );
+var TableRowColumn = require ( 'material-ui/lib/table/table-row-column' );
 
 /**
  * Format unixTime value as string for display
@@ -15,10 +17,10 @@ var TemperatureTableRow = React.createClass({
 
   render: function() {
     return (
-      <tr className="etl-temp-table-row">
-        <td className="etl-temp-table-timestamp">{formatTimestamp(this.props.timestamp)}</td>
-        <td className="etl-temp-table-row">{this.props.temperature}</td>
-      </tr>
+      <TableRow>
+        <TableRowColumn>{formatTimestamp(this.props.timestamp)}</TableRowColumn>
+        <TableRowColumn>{this.props.temperature}</TableRowColumn>
+      </TableRow>
     );
   }
 });

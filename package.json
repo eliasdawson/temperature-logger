@@ -46,6 +46,7 @@
     "karma-coverage": "^0.5.3",
     "karma-jasmine": "^0.3.7",
     "karma-phantomjs-launcher": "^1.0.0",
+    "material-ui": "^0.14.4",
     "mock-socket": "^2.0.0",
     "moment": "^2.11.2",
     "node-sass": "^3.4.2",
@@ -54,6 +55,7 @@
     "postcss-cli": "^2.5.1",
     "react": "^0.14.7",
     "react-dom": "^0.14.7",
+    "react-tap-event-plugin": "^0.2.2",
     "watchify": "^3.7.0"
   },
   "dependencies": {

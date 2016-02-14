@@ -1,4 +1,6 @@
 var React = require( 'react' );
+var RaisedButton = require( 'material-ui/lib/raised-button' );
+var TextField = require( 'material-ui/lib/text-field' );
 
 var TemperatureInput = React.createClass({
 
@@ -20,8 +22,8 @@ var TemperatureInput = React.createClass({
   render: function() {
     return (
       <form className="etl-temp-form" onSubmit={this.write}>
-        <input className="etl-temp-form-input" type="number" value={this.state.temperature} onChange={this.handleChange} />
-        <input className="etl-temp-form-btn" type="submit" value="Write" />
+        <TextField type="number" value={this.state.temperature} onChange={this.handleChange} floatingLabelText="Temperature" />
+        <RaisedButton label="Write" primary={true} type="submit" />
       </form>
     );
   }
