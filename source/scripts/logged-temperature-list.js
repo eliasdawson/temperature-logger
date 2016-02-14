@@ -7,13 +7,13 @@ var LoggedTemperature = require( './logged-temperature' );
  * @return {number}   Sort comparison indicator
  */
 function sortTemperaturesByTimestampAscending( a, b ) {
-  return a[0] - b[0];
+  return a.timestamp - b.timestamp;
 }
 
 /**
  * Translate temperature socket result into more useful object
  * @constructor
- * @param  {Array<number>} result Result portion of web socket message
+ * @param  {Array<Array<number>>} result Result portion of web socket message
  */
 var LoggedTemperatureList = function( result ) {
   var i;
