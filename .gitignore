@@ -12,3 +12,6 @@ coverage
 
 # Build directory
 dist
+
+# Dev temp directory
+dev

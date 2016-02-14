@@ -28,7 +28,7 @@
     "laxcomma":         false,    // if line breaks should not be checked around commas
     "loopfunc":         false,    // if functions should be allowed to be defined within loops
     //"maxdepth":       2,        // enforce maximum allowed nesting depth
-    "maxlen":           80,       // enforece maximum allowed length of line
+    //"maxlen":         80,       // enforece maximum allowed length of line
     //"maxparams":      3,        // enforce maximum number of formal parameters allowed per function
     //"maxstatements":  4,        // enforce maximum number of statements allowed per function
     "mootools":         false,    // if MooTools globals should be predefined
@@ -66,6 +66,7 @@
         "beforeEach":   false,    // Jasmine
         "afterEach":    false,    // Jasmine
         "it":           false,    // Jasmine
+        "xit":          false,    // Jasmine
         "expect":       false,    // Jasmine
         "spyOn":        false,    // Jasmine
         "waitsFor":     false,    // Jasmine
